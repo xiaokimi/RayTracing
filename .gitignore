@@ -3,7 +3,10 @@
 !vendor/bin/premake/
 bin-int/
 
-#Visual Studio files and folder
+# .ppm
+**.ppm
+
+# Visual Studio files and folder
 .vs/
 **.sln
 **.vcxproj

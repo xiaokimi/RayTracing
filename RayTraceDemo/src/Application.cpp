@@ -2,14 +2,25 @@
 #include "HitableList.h"
 #include "Sphere.h"
 #include "Camera.h"
+#include "Material.h"
+#include "Lambertian.h"
+#include "Metal.h"
 
-Color getColor(const Ray& ray, const Hitable* world)
+Color getColor(const Ray& ray, const Hitable* world, int depth)
 {
 	HitRecord record;
 	if (world->hit(ray, 0.001f, MAXFLOAT, record))
 	{
-		Vector3f target = record.p + record.normal + randomInUnitSphere();
-		return 0.5f * getColor(Ray(record.p, target - record.p), world);
+		Ray scattered;
+		Vector3f attenuation;
+		if (depth < 50 && record.material->scatter(ray, record, attenuation, scattered))
+		{
+			return attenuation * getColor(scattered, world, depth + 1);
+		}
+		else
+		{
+			return Vector3f(0.0f, 0.0f, 0.0f);
+		}
 	}
 		
 	Vector3f dir = ray.getDirection().normalize();
@@ -22,11 +33,13 @@ int main()
 	//
 	Camera camera;
 
-	Hitable *list[2];
-	list[0] = new Sphere(Point3(0.0f, 0.0f, -1.0f), 0.5f);
-	list[1] = new Sphere(Point3(0.0f, -100.5f, -1.0f), 100.0f);
+	Hitable *list[4];
+	list[0] = new Sphere(Point3(0.0f, 0.0f, -1.0f), 0.5f, new Lambertian(Vector3f(0.8f, 0.3f, 0.3f)));
+	list[1] = new Sphere(Point3(0.0f, -100.5f, -1.0f), 100.0f, new Lambertian(Vector3f(0.8f, 0.8f, 0.0f)));
+	list[2] = new Sphere(Point3(1.0f, 0.0f, -1.0f), 0.5f, new Metal(Vector3f(0.8f, 0.6f, 0.2f)));
+	list[3] = new Sphere(Point3(-1.0f, 0.0f, -1.0f), 0.5f, new Metal(Vector3f(0.8f, 0.8f, 0.8f)));
 
-	Hitable* world = new HitableList(list, 2);
+	Hitable* world = new HitableList(list, 4);
 
 	//
 	int width = 200, height = 100;
@@ -47,7 +60,7 @@ int main()
 				float v = (j * 1.0f + dis(gen))/ height;
 
 				Ray ray = camera.getRay(u, v);
-				color += getColor(ray, world);
+				color += getColor(ray, world, 0);
 			}
 			color /= sampleCount;
 

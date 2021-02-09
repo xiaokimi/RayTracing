@@ -155,6 +155,11 @@ Vector3f Vector3f::normalize() const
 	return *this / length();
 }
 
+Vector3f Vector3f::reflect(const Vector3f& n) const
+{
+	return *this - 2.0f * n.dot(*this) * n;
+}
+
 float Vector3f::length() const
 {
 	return std::sqrt(lengthSquared());

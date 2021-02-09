@@ -2,11 +2,11 @@
 
 #include "Material.h"
 
-class Lambertian : public Material
+class Metal : public Material
 {
 public:
-	Lambertian(const Vector3f& albedo);
-
+	Metal(const Vector3f& albedo);
+	
 	virtual bool scatter(const Ray& rayIn, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const override;
 
 private:

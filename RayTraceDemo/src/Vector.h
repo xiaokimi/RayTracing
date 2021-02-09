@@ -34,6 +34,7 @@ public:
 	float dot(const Vector3f& v) const;
 	Vector3f cross(const Vector3f& v) const;
 	Vector3f normalize() const;
+	Vector3f reflect(const Vector3f& n) const;
 
 	float length() const;
 	float lengthSquared() const;

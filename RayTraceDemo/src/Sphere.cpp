@@ -4,13 +4,15 @@
 Sphere::Sphere()
 : m_Center(0.0f, 0.0f, 0.0f)
 , m_Radius(0.0f)
+, m_Material(nullptr)
 {
 
 }
 
-Sphere::Sphere(const Point3& center, const float& radius)
+Sphere::Sphere(const Point3& center, const float& radius, Material* material)
 : m_Center(center)
 , m_Radius(radius)
+, m_Material(material)
 {
 
 }
@@ -35,6 +37,7 @@ bool Sphere::hit(const Ray& ray, float tMin, float tMax, HitRecord& record) cons
 			record.t = t;
 			record.p = ray.at(t);
 			record.normal = (record.p - m_Center) / m_Radius;
+			record.material = m_Material;
 			return true;
 		}
 
@@ -44,6 +47,7 @@ bool Sphere::hit(const Ray& ray, float tMin, float tMax, HitRecord& record) cons
 			record.t = t;
 			record.p = ray.at(t);
 			record.normal = (record.p - m_Center) / m_Radius;
+			record.material = m_Material;
 			return true;
 		}
 	}
