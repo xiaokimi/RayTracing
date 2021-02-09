@@ -160,6 +160,20 @@ Vector3f Vector3f::reflect(const Vector3f& n) const
 	return *this - 2.0f * n.dot(*this) * n;
 }
 
+bool Vector3f::refract(const Vector3f& n, const float& niOvernt, Vector3f& refracted) const
+{
+	Vector3f uv = (*this).normalize();
+	float dt = uv.dot(n);
+	float discriminant = 1.0f - niOvernt * niOvernt * (1 - dt * dt);
+	if (discriminant > 0.0f)
+	{
+		refracted = niOvernt * (uv - n * dt) - n * std::sqrt(discriminant);
+		return true;
+	}
+
+	return false;
+}
+
 float Vector3f::length() const
 {
 	return std::sqrt(lengthSquared());

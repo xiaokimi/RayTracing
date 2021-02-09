@@ -5,6 +5,7 @@
 #include "Material.h"
 #include "Lambertian.h"
 #include "Metal.h"
+#include "Dielectric.h"
 
 Color getColor(const Ray& ray, const Hitable* world, int depth)
 {
@@ -34,10 +35,10 @@ int main()
 	Camera camera;
 
 	Hitable *list[4];
-	list[0] = new Sphere(Point3(0.0f, 0.0f, -1.0f), 0.5f, new Lambertian(Vector3f(0.8f, 0.3f, 0.3f)));
+	list[0] = new Sphere(Point3(0.0f, 0.0f, -1.0f), 0.5f, new Lambertian(Vector3f(0.1f, 0.2f, 0.5f)));
 	list[1] = new Sphere(Point3(0.0f, -100.5f, -1.0f), 100.0f, new Lambertian(Vector3f(0.8f, 0.8f, 0.0f)));
-	list[2] = new Sphere(Point3(1.0f, 0.0f, -1.0f), 0.5f, new Metal(Vector3f(0.8f, 0.6f, 0.2f)));
-	list[3] = new Sphere(Point3(-1.0f, 0.0f, -1.0f), 0.5f, new Metal(Vector3f(0.8f, 0.8f, 0.8f)));
+	list[2] = new Sphere(Point3(1.0f, 0.0f, -1.0f), 0.5f, new Metal(Vector3f(0.8f, 0.6f, 0.2f), 0.3f));
+	list[3] = new Sphere(Point3(-1.0f, 0.0f, -1.0f), 0.5f, new Dielectric(1.5f));
 
 	Hitable* world = new HitableList(list, 4);
 

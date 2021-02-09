@@ -35,6 +35,7 @@ public:
 	Vector3f cross(const Vector3f& v) const;
 	Vector3f normalize() const;
 	Vector3f reflect(const Vector3f& n) const;
+	bool refract(const Vector3f& n, const float& niOvernt, Vector3f& refracted) const;
 
 	float length() const;
 	float lengthSquared() const;
