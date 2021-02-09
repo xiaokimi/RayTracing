@@ -16,6 +16,9 @@ project "RayTraceDemo"
 	targetdir("bin/" .. outputdir .. "/%{prj.name}")
 	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "rtpch.h"
+	pchsource "RayTraceDemo/src/rtpch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",

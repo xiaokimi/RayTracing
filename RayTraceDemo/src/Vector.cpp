@@ -1,6 +1,5 @@
+#include "rtpch.h"
 #include "Vector.h"
-
-#include <cmath>
 
 Vector3f::Vector3f()
 : X(0.0f)

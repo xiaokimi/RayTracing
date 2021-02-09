@@ -1,3 +1,4 @@
+#include "rtpch.h"
 #include "Ray.h"
 
 Ray::Ray()
