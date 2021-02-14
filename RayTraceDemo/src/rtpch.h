@@ -4,6 +4,10 @@
 #include <cmath>
 #include <random>
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+
 #include "Vector.h"
 
 //
@@ -15,3 +19,8 @@ static std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
 //
 Vector3f randomInUnitSphere();
+Vector3f randomInUnitDisk();
+
+float schlick(const float& cosine, const float& refractiveIndex);
+
+void updateProgress(const float& progress);

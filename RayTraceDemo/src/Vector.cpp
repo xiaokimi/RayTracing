@@ -9,7 +9,15 @@ Vector3f::Vector3f()
 
 }
 
-Vector3f::Vector3f(float xx, float yy, float zz)
+Vector3f::Vector3f(const float& t)
+: X(t)
+, Y(t)
+, Z(t)
+{
+
+}
+
+Vector3f::Vector3f(const float& xx, const float& yy, const float& zz)
 : X(xx)
 , Y(yy)
 , Z(zz)

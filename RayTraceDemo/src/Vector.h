@@ -4,7 +4,8 @@ class Vector3f
 {
 public:
 	Vector3f();
-	Vector3f(float xx, float yy, float zz);
+	Vector3f(const float& t);
+	Vector3f(const float& xx, const float& yy, const float& zz);
 	Vector3f(const Vector3f& v);
 	~Vector3f();
 

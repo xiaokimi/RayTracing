@@ -29,22 +29,60 @@ Color getColor(const Ray& ray, const Hitable* world, int depth)
 	return (1.0f - t) * Vector3f(1.0f, 1.0f, 1.0f) + t * Vector3f(0.5f, 0.7f, 1.0f);
 }
 
+Hitable* randomScene()
+{
+	int n = 500;
+	Hitable** list = new Hitable*[n + 1];
+	list[0] = new Sphere(Point3(0.0f, -1000.0f, 0.0f), 1000, new Lambertian(Vector3f(0.5f, 0.5f, 0.5f)));
+
+	int i = 1;
+	for (int a = -11; a < 11; a++)
+	{
+		for (int b = -11; b < 11; b++)
+		{
+			float chooseMat = dis(gen);
+			Vector3f center(a + 0.9 * dis(gen), 0.2f, b + 0.9f * dis(gen));
+			if ((center - Vector3f(4.0f, 0.2f, 0.0f)).length() > 0.9f)
+			{
+				if (chooseMat < 0.8f)
+				{
+					list[i++] = new Sphere(center, 0.2f, new Lambertian(Vector3f(dis(gen) * dis(gen), dis(gen) * dis(gen), dis(gen) * dis(gen))));
+				}
+				else if (chooseMat < 0.95f)
+				{
+					list[i++] = new Sphere(center, 0.2f, new Metal(Vector3f(0.5f * (1.0f + dis(gen)), 0.5f * (1.0f + dis(gen)), 0.5f * (1.0f + dis(gen))), 0.5 * dis(gen)));
+				}
+				else
+				{
+					list[i++] = new Sphere(center, 0.2f, new Dielectric(1.5f));
+				}
+			}
+		}
+	}
+
+	list[i++] = new Sphere(Point3(0.0f, 1.0f, 0.0f), 1.0f, new Dielectric(1.5f));
+	list[i++] = new Sphere(Point3(-4.0f, 1.0f, 0.0f), 1.0f, new Lambertian(Vector3f(0.4f, 0.2f, 0.1f)));
+	list[i++] = new Sphere(Point3(4.0f, 1.0f, 0.0f), 1.0f, new Metal(Vector3f(0.7f, 0.6f, 0.5f), 0.0f));
+
+	return new HitableList(list, i);
+}
+
 int main()
 {
-	//
-	Camera camera;
-
-	Hitable *list[4];
-	list[0] = new Sphere(Point3(0.0f, 0.0f, -1.0f), 0.5f, new Lambertian(Vector3f(0.1f, 0.2f, 0.5f)));
-	list[1] = new Sphere(Point3(0.0f, -100.5f, -1.0f), 100.0f, new Lambertian(Vector3f(0.8f, 0.8f, 0.0f)));
-	list[2] = new Sphere(Point3(1.0f, 0.0f, -1.0f), 0.5f, new Metal(Vector3f(0.8f, 0.6f, 0.2f), 0.3f));
-	list[3] = new Sphere(Point3(-1.0f, 0.0f, -1.0f), 0.5f, new Dielectric(1.5f));
-
-	Hitable* world = new HitableList(list, 4);
+	int width = 1200, height = 800;
 
 	//
-	int width = 200, height = 100;
-	int sampleCount = 100;
+	Point3 lookfrom(13.0f, 2.0f, 3.0f);
+	Point3 lookat(0.0f, 0.0f, 0.0f);
+	float distToFocus = 10.0f;
+	float aperture = 0.1f;
+
+	Camera camera(lookfrom, lookat, Vector3f(0.0f, 1.0f, 0.0f), 20.0f, float(width) / float(height), aperture, distToFocus);
+
+	Hitable* world = randomScene();
+
+	//
+	int sampleCount = 10;
 	
 	FILE* fp;
 	errno_t err = fopen_s(&fp, "test.ppm", "wb");
@@ -71,7 +109,10 @@ int main()
 
 			fprintf(fp, "\n%d %d %d", ir, ig, ib);
 		}
+
+		updateProgress(1.0f - j / (float)height);
 	}
+	updateProgress(1.0f);
 	fclose(fp);
 
 	std::cin.get();
