@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Ray.h"
-#include "Hitable.h"
+#include "Object.h"
 
-class Material
+class Matetial
 {
 public:
-	virtual bool scatter(const Ray& rayIn, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const = 0;
+	virtual bool scatter(const Ray& I, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const = 0;
 };

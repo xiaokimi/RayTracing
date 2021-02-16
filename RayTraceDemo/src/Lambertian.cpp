@@ -7,10 +7,15 @@ Lambertian::Lambertian(const Vector3f& albedo)
 
 }
 
-bool Lambertian::scatter(const Ray& rayIn, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const
+Lambertian::~Lambertian()
 {
-	Vector3f target = record.p + record.normal + randomInUnitSphere();
-	scattered = Ray(record.p, target - record.p);
+
+}
+
+bool Lambertian::scatter(const Ray& I, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const
+{
+	Vector3f target = record.p + record.normal + getRandomInUnitSphere();
+	scattered = Ray(record.p, (target - record.p).normalize());
 	attenuation = m_Albedo;
 
 	return true;

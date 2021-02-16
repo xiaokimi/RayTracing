@@ -1,9 +1,9 @@
 #include "rtpch.h"
 
-Vector3f randomInUnitSphere()
+Vector3f getRandomInUnitSphere()
 {
 	Vector3f p;
-	do
+	do 
 	{
 		p = 2.0f * Vector3f(dis(gen), dis(gen), dis(gen)) - Vector3f(1.0f, 1.0f, 1.0f);
 	} while (p.lengthSquared() >= 1.0f);
@@ -11,45 +11,26 @@ Vector3f randomInUnitSphere()
 	return p;
 }
 
-Vector3f randomInUnitDisk()
+float fresnel(const Vector3f& I, const Vector3f& N, const float& ior)
 {
-	Vector3f p;
-	do
+	float cosi = dot(I, N);
+	float etai = 1.0f, etat = ior;
+	if (cosi > 0.0f)
 	{
-		p = 2.0f * Vector3f(dis(gen), dis(gen), 0.0f) - Vector3f(1.0f, 1.0f, 0.0f);
-	} while (p.lengthSquared() >= 1.0f);
-
-	return p;
-}
-
-float schlick(const float& cosine, const float& refractiveIndex)
-{
-	float r0 = (1.0f - refractiveIndex) / (1.0f + refractiveIndex);
-	r0 *= r0;
-	return r0 + (1.0f - r0) * std::pow((1.0f - cosine), 5);
-}
-
-void updateProgress(const float& progress)
-{
-	int barWidth = 70;
-
-	std::cout << "[";
-	int pos = barWidth * progress;
-	for (int i = 0; i < barWidth; i++)
-	{
-		if (i < pos)
-		{
-			std::cout << "=";
-		}
-		else if (i == pos)
-		{
-			std::cout << ">";
-		}
-		else
-		{
-			std::cout << " ";
-		}
+		std::swap(etai, etat);
 	}
-	std::cout << "]" << int(progress * 100.0f) << " %\r";
-	std::cout.flush();
+
+	float sint = etai / etat * std::sqrtf(1.0f - cosi * cosi);
+	if (sint >= 1.0f)
+	{
+		return 1.0f;
+	}
+
+	float cost = std::sqrtf(1.0f - sint * sint);
+	cosi = std::fabs(cosi);
+
+	float Rs = (etat * cosi - etai * cost) / (etat * cosi + etai * cost);
+	float Rp = (etai * cosi - etat * cost) / (etai * cosi + etat * cost);
+
+	return (Rs * Rs + Rp * Rp) / 2;
 }

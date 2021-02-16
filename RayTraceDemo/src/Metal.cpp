@@ -1,7 +1,7 @@
 #include "rtpch.h"
 #include "Metal.h"
 
-Metal::Metal(const Vector3f& albedo, const float& fuzz)
+Metal::Metal(const Vector3f& albedo, const float& fuzz /*= 0.0f*/)
 : m_Albedo(albedo)
 {
 	if (fuzz < 1.0f)
@@ -14,11 +14,16 @@ Metal::Metal(const Vector3f& albedo, const float& fuzz)
 	}
 }
 
-bool Metal::scatter(const Ray& rayIn, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const
+Metal::~Metal()
 {
-	Vector3f reflected = rayIn.getDirection().normalize().reflect(record.normal);
-	scattered = Ray(record.p, reflected + m_Fuzz * randomInUnitSphere());
-	attenuation = m_Albedo;
 
-	return (scattered.getDirection().dot(record.normal) > 0.0f);
+}
+
+bool Metal::scatter(const Ray& I, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const
+{
+	Vector3f reflected = reflect(I.getDirection(), record.normal);
+	Vector3f fuzzDir = (reflected + m_Fuzz * getRandomInUnitSphere()).normalize();
+	scattered = Ray(record.p, fuzzDir);
+	attenuation = m_Albedo;
+	return (dot(fuzzDir, record.normal) > 0.0f);
 }

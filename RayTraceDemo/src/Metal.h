@@ -2,12 +2,13 @@
 
 #include "Material.h"
 
-class Metal : public Material
+class Metal : public Matetial
 {
 public:
-	Metal(const Vector3f& albedo, const float& fuzz);
-	
-	virtual bool scatter(const Ray& rayIn, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const override;
+	Metal(const Vector3f& albedo, const float& fuzz = 0.0f);
+	~Metal();
+
+	virtual bool scatter(const Ray& I, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const override;
 
 private:
 	Vector3f m_Albedo;

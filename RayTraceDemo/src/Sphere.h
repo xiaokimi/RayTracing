@@ -1,18 +1,19 @@
 #pragma once
 
-#include "Hitable.h"
+#include "Object.h"
+#include "Material.h"
 
-class Sphere : public Hitable
+class Sphere : public Object
 {
 public:
-	Sphere();
-	Sphere(const Point3& center, const float& radius, Material* material);
+	Sphere(const Point3& center, const float& radius, Matetial* matetial);
 	~Sphere();
 
-	virtual bool hit(const Ray& ray, float tMin, float tMax, HitRecord& record) const override;
+	virtual bool hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord& record) const override;
 
 private:
 	Point3 m_Center;
 	float m_Radius;
-	Material* m_Material;
+
+	Matetial* m_Matetial;
 };

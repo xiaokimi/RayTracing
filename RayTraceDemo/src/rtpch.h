@@ -1,26 +1,18 @@
 #pragma once
 
 #include <iostream>
-#include <cmath>
 #include <random>
-
-#define _USE_MATH_DEFINES
-#include <math.h>
-
+#include <cmath>
 
 #include "Vector.h"
 
-//
-constexpr float MAXFLOAT = std::numeric_limits<float>::max();
+constexpr float M_PI = 3.14159265358979323846;
+constexpr float kInfinity = std::numeric_limits<float>::max();
 
-static std::random_device rd;
-static std::mt19937 gen(rd());
+static std::random_device dev;
+static std::mt19937 gen(dev());
 static std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
-//
-Vector3f randomInUnitSphere();
-Vector3f randomInUnitDisk();
+Vector3f getRandomInUnitSphere();
 
-float schlick(const float& cosine, const float& refractiveIndex);
-
-void updateProgress(const float& progress);
+float fresnel(const Vector3f& I, const Vector3f& N, const float& ior);
