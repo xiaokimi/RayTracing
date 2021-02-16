@@ -11,6 +11,17 @@ Vector3f getRandomInUnitSphere()
 	return p;
 }
 
+Vector3f getRandomInUnitDisk()
+{
+	Vector3f p;
+	do
+	{
+		p = 2.0f * Vector3f(dis(gen), dis(gen), 0) - Vector3f(1.0f, 1.0f, 0.0f);
+	} while (p.lengthSquared() >= 1.0f);
+
+	return p;
+}
+
 float fresnel(const Vector3f& I, const Vector3f& N, const float& ior)
 {
 	float cosi = dot(I, N);

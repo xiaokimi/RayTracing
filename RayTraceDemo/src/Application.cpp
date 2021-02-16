@@ -12,7 +12,12 @@ int main()
 	int width = 200;
 	int heigth = 100;
 
-	Camera camera;
+	Point3 lookfrom(3.0f, 3.0f, 2.0f);
+	Point3 lookat(0.0f, 0.0f, -1.0f);
+	float focusDistance = (lookfrom - lookat).length();
+	float apeture = 2.0f;
+
+	Camera camera(lookfrom, lookat, Vector3f(0.0f, 1.0f, 0.0f), 20.0f, float(width)/float(heigth), apeture, focusDistance);
 	Scene scene(width, heigth);
 	Renderer renderer(width, heigth);
 

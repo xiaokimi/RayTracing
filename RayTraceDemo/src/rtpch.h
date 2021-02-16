@@ -14,5 +14,6 @@ static std::mt19937 gen(dev());
 static std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
 Vector3f getRandomInUnitSphere();
+Vector3f getRandomInUnitDisk();
 
 float fresnel(const Vector3f& I, const Vector3f& N, const float& ior);
