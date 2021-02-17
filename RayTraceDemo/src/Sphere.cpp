@@ -1,10 +1,10 @@
 #include "rtpch.h"
 #include "Sphere.h"
 
-Sphere::Sphere(const Point3& center, const float& radius, Matetial* matetial)
+Sphere::Sphere(const Point3& center, const float& radius, Material* material)
 : m_Center(center)
 , m_Radius(radius)
-, m_Matetial(matetial)
+, m_Material(material)
 {
 
 }
@@ -29,7 +29,7 @@ bool Sphere::hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord
 			record.t = t;
 			record.p = ray.getPosition(t);
 			record.normal = (record.p - m_Center) / m_Radius;
-			record.matetial = m_Matetial;
+			record.material = m_Material;
 			return true;
 		}
 
@@ -39,7 +39,7 @@ bool Sphere::hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord
 			record.t = t;
 			record.p = ray.getPosition(t);
 			record.normal = (record.p - m_Center) / m_Radius;
-			record.matetial = m_Matetial;
+			record.material = m_Material;
 			return true;
 		}
 	}

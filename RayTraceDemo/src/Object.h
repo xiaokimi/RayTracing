@@ -2,14 +2,14 @@
 
 #include "Ray.h"
 
-class Matetial;
+class Material;
 
 struct HitRecord
 {
 	float t;
 	Point3 p;
 	Vector3f normal;
-	Matetial* matetial;
+	Material* material;
 };
 
 class Object

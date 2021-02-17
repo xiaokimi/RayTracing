@@ -54,7 +54,7 @@ Color Renderer::castRay(const Scene& scene, const Ray& ray, const int& depth) co
 	{
 		Ray scattered;
 		Vector3f attenuation;
-		if (depth < m_MaxDepth && record.matetial->scatter(ray, record, attenuation, scattered))
+		if (depth < m_MaxDepth && record.material->scatter(ray, record, attenuation, scattered))
 		{
 			return attenuation * castRay(scene, scattered, depth + 1);
 		}

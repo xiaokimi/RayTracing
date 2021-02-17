@@ -19,9 +19,9 @@ Metal::~Metal()
 
 }
 
-bool Metal::scatter(const Ray& I, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const
+bool Metal::scatter(const Ray& ray, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const
 {
-	Vector3f reflected = reflect(I.getDirection(), record.normal);
+	Vector3f reflected = reflect(ray.getDirection(), record.normal);
 	Vector3f fuzzDir = (reflected + m_Fuzz * getRandomInUnitSphere()).normalize();
 	scattered = Ray(record.p, fuzzDir);
 	attenuation = m_Albedo;

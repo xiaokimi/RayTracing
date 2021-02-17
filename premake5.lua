@@ -25,6 +25,9 @@ project "RayTraceDemo"
 		"%{prj.name}/src/**.cpp"
 	}
 
+	filter "system:windows"
+		cppdialect "C++17"
+
 	filter {"configurations:Debug"}
 		defines {"DEBUG"}
 		symbols "On"

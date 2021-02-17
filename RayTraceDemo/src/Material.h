@@ -3,8 +3,8 @@
 #include "Ray.h"
 #include "Object.h"
 
-class Matetial
+class Material
 {
 public:
-	virtual bool scatter(const Ray& I, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const = 0;
+	virtual bool scatter(const Ray& ray, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const = 0;
 };
