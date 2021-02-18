@@ -13,6 +13,7 @@ public:
 	float x() const;
 	float y() const;
 	float z() const;
+	float& operator[](const int& index);
 
 	Vector3f operator-() const;
 

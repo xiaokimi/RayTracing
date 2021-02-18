@@ -53,6 +53,28 @@ float Vector3f::z() const
 	return Z;
 }
 
+float& Vector3f::operator[](const int& index)
+{
+	switch (index)
+	{
+	case 0:
+	{
+		return X;
+		break;
+	}
+	case 1:
+	{
+		return Y;
+		break;
+	}
+	case 2:
+	{
+		return Z;
+		break;
+	}
+	}
+}
+
 Vector3f Vector3f::operator-() const
 {
 	return Vector3f(-X, -Y, -Z);

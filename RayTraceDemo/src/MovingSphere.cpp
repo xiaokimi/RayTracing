@@ -51,6 +51,13 @@ bool MovingSphere::hit(const Ray& ray, const float& tMin, const float& tMax, Hit
 	return false;
 }
 
+
+bool MovingSphere::getBoundingBox(const float& t0, const float& t1, Bounds3& box) const
+{
+
+	return true;
+}
+
 Point3 MovingSphere::getCenter(const float& time) const
 {
 	return m_Center0 + (time - m_Time0) / (m_Time1 - m_Time0) * (m_Center1 - m_Center0);

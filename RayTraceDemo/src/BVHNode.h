@@ -1,20 +1,19 @@
 #pragma once
 
 #include "Object.h"
-#include "Material.h"
+#include "Bounds3.h"
 
-class Sphere : public Object
+class BVHNode : public Object
 {
 public:
-	Sphere(const Point3& center, const float& radius, Material* matetial);
-	~Sphere();
+	BVHNode() = default;
+	BVHNode(Object** l, const int& nCount, const float& t0, const float& t1);
 
 	virtual bool hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord& record) const override;
 	virtual bool getBoundingBox(const float& t0, const float& t1, Bounds3& box) const override;
 
 private:
-	Point3 m_Center;
-	float m_Radius;
-
-	Material* m_Material;
+	Object* m_Left;
+	Object* m_Right;
+	Bounds3 m_Box;
 };

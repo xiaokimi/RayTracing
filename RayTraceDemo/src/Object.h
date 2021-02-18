@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Ray.h"
+#include "Bounds3.h"
 
 class Material;
 
@@ -16,4 +17,5 @@ class Object
 {
 public:
 	virtual bool hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord& record) const = 0;
+	virtual bool getBoundingBox(const float& t0, const float& t1, Bounds3& box) const = 0;
 };

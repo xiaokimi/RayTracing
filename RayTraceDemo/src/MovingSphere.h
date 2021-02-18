@@ -11,6 +11,7 @@ public:
 	~MovingSphere();
 
 	virtual bool hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord& record) const override;
+	virtual bool getBoundingBox(const float& t0, const float& t1, Bounds3& box) const override;
 
 	Point3 getCenter(const float& time) const;
 
