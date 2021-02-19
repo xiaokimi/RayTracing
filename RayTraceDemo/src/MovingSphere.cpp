@@ -54,6 +54,11 @@ bool MovingSphere::hit(const Ray& ray, const float& tMin, const float& tMax, Hit
 
 bool MovingSphere::getBoundingBox(const float& t0, const float& t1, Bounds3& box) const
 {
+	Point3 center0 = getCenter(t0);
+	Point3 center1 = getCenter(t1);
+	Bounds3 box0(center0 - Vector3f(m_Radius), center0 + Vector3f(m_Radius));
+	Bounds3 box1(center1 - Vector3f(m_Radius), center1 + Vector3f(m_Radius));
+	box = getSurroundingBox(box0, box1);
 
 	return true;
 }

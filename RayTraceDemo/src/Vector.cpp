@@ -55,24 +55,12 @@ float Vector3f::z() const
 
 float& Vector3f::operator[](const int& index)
 {
-	switch (index)
-	{
-	case 0:
-	{
+	if (index == 0)
 		return X;
-		break;
-	}
-	case 1:
-	{
+	else if (index == 1)
 		return Y;
-		break;
-	}
-	case 2:
-	{
+	else
 		return Z;
-		break;
-	}
-	}
 }
 
 Vector3f Vector3f::operator-() const

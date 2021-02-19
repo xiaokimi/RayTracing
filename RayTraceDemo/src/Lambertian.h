@@ -1,15 +1,16 @@
 #pragma once
 
 #include "Material.h"
+#include "Texture.h"
 
 class Lambertian : public Material
 {
 public:
-	Lambertian(const Vector3f& albedo);
+	Lambertian(Texture* albedo);
 	~Lambertian();
 
 	virtual bool scatter(const Ray& ray, const HitRecord& record, Vector3f& attenuation, Ray& scattered) const override;
 
 private:
-	Vector3f m_Albedo;
+	Texture* m_Albedo;
 };
