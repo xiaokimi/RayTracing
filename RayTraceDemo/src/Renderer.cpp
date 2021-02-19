@@ -9,7 +9,7 @@ Renderer::Renderer(int width, int height)
 {
 	m_FrameBuffer.resize(width * height);
 
-	int nCount = 11;
+	int nCount = 5;
 	for (int v = nCount - 1; v > 0; v--)
 	{
 		for (int u = 1; u < nCount; u++)

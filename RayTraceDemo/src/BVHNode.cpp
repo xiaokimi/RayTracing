@@ -86,15 +86,15 @@ int boxCompareByIndex(const Object* object0, const Object* object1, const int& i
 
 int boxCompareX(const void* a, const void* b)
 {
-	return boxCompareByIndex(static_cast<const Object*>(a), static_cast<const Object*>(b), 0);
+	return boxCompareByIndex(*(Object**)a, *(Object**)b, 0);
 }
 
 int boxCompareY(const void* a, const void* b)
 {
-	return boxCompareByIndex(static_cast<const Object*>(a), static_cast<const Object*>(b), 1);
+	return boxCompareByIndex(*(Object**)a, *(Object**)b, 1);
 }
 
 int boxCompareZ(const void* a, const void* b)
 {
-	return boxCompareByIndex(static_cast<const Object*>(a), static_cast<const Object*>(b), 2);
+	return boxCompareByIndex(*(Object**)a, *(Object**)b, 2);
 }
