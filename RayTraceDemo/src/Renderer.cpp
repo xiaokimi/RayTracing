@@ -42,6 +42,18 @@ void Renderer::render(const Scene& scene, const Camera& camera)
 	}
 }
 
+
+int Renderer::getWidth() const
+{
+	return m_Width;
+}
+
+
+int Renderer::getHeight() const
+{
+	return m_Height;
+}
+
 const std::vector<Color>& Renderer::getFrameBuffer() const
 {
 	return m_FrameBuffer;

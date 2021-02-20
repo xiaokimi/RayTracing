@@ -10,6 +10,9 @@ public:
 	~Scene();
 
 	void setBVHNode(BVHNode* root);
+	void setObjectList(Object** objectList, const int& nCount);
+
+	void setHitType(int hitType);
 
 	int getWidth() const;
 	int getHeight() const;
@@ -23,5 +26,10 @@ private:
 
 	Color m_BackgroundColor;
 	
+	int m_HitType;
+
 	BVHNode* m_Root;
+
+	int m_ObjectCount;
+	Object** m_ObjectList;
 };

@@ -15,6 +15,8 @@ public:
 
 	void render(const Scene& scene, const Camera& camera);
 
+	int getWidth() const;
+	int getHeight() const;
 	[[nodiscard]] const std::vector<Color>& getFrameBuffer() const;
 
 private:
