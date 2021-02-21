@@ -52,3 +52,13 @@ bool Sphere::getBoundingBox(const float& t0, const float& t1, Bounds3& box) cons
 	box = Bounds3(m_Center - Vector3f(m_Radius), m_Center + Vector3f(m_Radius));
 	return true;
 }
+
+void Sphere::getUVCoord(const Point3& point, float& u, float& v)
+{
+	Vector3f p = (point - m_Center) / m_Radius;
+	float phi = std::atan2f(p.z(), p.x());
+	float theta = std::asinf(p.y());
+
+	u = 1 - (phi + M_PI) / (2 * M_PI);
+	v = (theta + M_PI / 2) / M_PI;
+}

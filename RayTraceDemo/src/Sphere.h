@@ -12,6 +12,8 @@ public:
 	virtual bool hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord& record) const override;
 	virtual bool getBoundingBox(const float& t0, const float& t1, Bounds3& box) const override;
 
+	void getUVCoord(const Point3& point, float& u, float& v);
+
 private:
 	Point3 m_Center;
 	float m_Radius;

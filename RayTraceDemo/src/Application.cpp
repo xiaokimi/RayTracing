@@ -12,15 +12,19 @@
 #include "BVHNode.h"
 #include "TimeCounter.h"
 #include "NoiseTexture.h"
+#include "ImageTexture.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 void saveToFile(const Renderer& renderer, const char* filePath);
 
 int main()
 {
-	int width = 200;
-	int heigth = 100;
+	int width = 400;
+	int heigth = 400;
 
-	Point3 lookfrom(13.0f, 2.0f, 3.0f);
+	Point3 lookfrom(13.0f, 0.0f, 3.0f);
 	Point3 lookat(0.0f, 0.0f, 0.0f);
 	//float focusDistance = (lookfrom - lookat).length();
 	float focusDistance = 10.0f;
@@ -30,12 +34,17 @@ int main()
 	Scene scene(width, heigth);
 	Renderer renderer(width, heigth);
 
+	int textureWidth, textureHeight, channel;
+	unsigned char* textureData = stbi_load("res/sky.jpg", &textureWidth, &textureHeight, &channel, 0);
+
+	ImageTexture* imageTexture = new ImageTexture(textureWidth, textureHeight, textureData);
+
 	NoiseTexture* texture = new NoiseTexture();
 
-	const int nCount = 2;
+	const int nCount = 1;
 	Object *objectList[nCount];
-	objectList[0] = new Sphere(Point3(0.0f, -1000.0f, 0.0f), 1000.0f, new Lambertian(texture));
-	objectList[1] = new Sphere(Point3(0.0f, 2.0f, 0.0f), 2.0f, new Lambertian(texture));
+	//objectList[0] = new Sphere(Point3(0.0f, -1000.0f, 0.0f), 1000.0f, new Lambertian(texture));
+	objectList[0] = new Sphere(Point3(0.0f, 0.0f, 0.0f), 2.0f, new Lambertian(imageTexture));
 
 	scene.setObjectList(objectList, nCount);
 
