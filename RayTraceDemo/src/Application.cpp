@@ -60,9 +60,9 @@ void saveToFile(const Renderer& renderer, const char* filePath)
 	fprintf(fp, "P3\n%d %d\n255", renderer.getWidth(), renderer.getHeight());
 	for (auto& buffer : renderer.getFrameBuffer())
 	{
-		int R = std::powf(buffer.x(), gamma) * 255.0f;
-		int G = std::powf(buffer.y(), gamma) * 255.0f;
-		int B = std::powf(buffer.z(), gamma) * 255.0f;
+		int R = lerp(0.0f, 1.0f, std::powf(buffer.x(), gamma)) * 255.0f;
+		int G = lerp(0.0f, 1.0f, std::powf(buffer.y(), gamma)) * 255.0f;
+		int B = lerp(0.0f, 1.0f, std::powf(buffer.z(), gamma)) * 255.0f;
 		fprintf(fp, "\n%d %d %d", R, G, B);
 	}
 	fclose(fp);

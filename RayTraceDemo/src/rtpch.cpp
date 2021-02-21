@@ -1,5 +1,10 @@
 #include "rtpch.h"
 
+float lerp(const float& fMin, const float& fMax, const float& f)
+{
+	return std::fmaxf(fMin, std::fminf(fMax, f));
+}
+
 Vector3f getRandomInUnitSphere()
 {
 	Vector3f p;

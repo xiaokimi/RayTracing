@@ -13,6 +13,8 @@ static std::random_device dev;
 static std::mt19937 gen(dev());
 static std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
+float lerp(const float& fMin, const float& fMax, const float& f);
+
 Vector3f getRandomInUnitSphere();
 Vector3f getRandomInUnitDisk();
 
