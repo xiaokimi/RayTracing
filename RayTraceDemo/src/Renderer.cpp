@@ -66,17 +66,17 @@ Color Renderer::castRay(const Scene& scene, const Ray& ray, const int& depth) co
 	{
 		Ray scattered;
 		Vector3f attenuation;
+		Color emitted = record.material->emitted(record.u, record.v, record.p);
 		if (depth < m_MaxDepth && record.material->scatter(ray, record, attenuation, scattered))
 		{
-			return attenuation * castRay(scene, scattered, depth + 1);
+			return emitted + attenuation * castRay(scene, scattered, depth + 1);
 		}
 		else
 		{
-			return Vector3f(0.0f, 0.0f, 0.0f);
+			return emitted;
 		}
 	}
 
-	float t = 0.5f * (ray.getDirection().y() + 1.0f);
-	return (1.0f - t) * Vector3f(1.0f) + t * Vector3f(0.5f, 0.7f, 1.0f);
+	return Color(0.0f);
 }
 

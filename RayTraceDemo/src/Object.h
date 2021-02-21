@@ -8,6 +8,8 @@ class Material;
 struct HitRecord
 {
 	float t;
+	float u;
+	float v;
 	Point3 p;
 	Vector3f normal;
 	Material* material;

@@ -30,6 +30,8 @@ bool Sphere::hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord
 			record.p = ray.getPosition(t);
 			record.normal = (record.p - m_Center) / m_Radius;
 			record.material = m_Material;
+
+			getUVCoord(record.p, record.u, record.v);
 			return true;
 		}
 
@@ -40,6 +42,8 @@ bool Sphere::hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord
 			record.p = ray.getPosition(t);
 			record.normal = (record.p - m_Center) / m_Radius;
 			record.material = m_Material;
+
+			getUVCoord(record.p, record.u, record.v);
 			return true;
 		}
 	}
@@ -53,7 +57,7 @@ bool Sphere::getBoundingBox(const float& t0, const float& t1, Bounds3& box) cons
 	return true;
 }
 
-void Sphere::getUVCoord(const Point3& point, float& u, float& v)
+void Sphere::getUVCoord(const Point3& point, float& u, float& v) const
 {
 	Vector3f p = (point - m_Center) / m_Radius;
 	float phi = std::atan2f(p.z(), p.x());

@@ -13,6 +13,8 @@
 #include "TimeCounter.h"
 #include "NoiseTexture.h"
 #include "ImageTexture.h"
+#include "DiffuseLight.h"
+#include "XYRect.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -41,10 +43,10 @@ int main()
 
 	NoiseTexture* texture = new NoiseTexture();
 
-	const int nCount = 1;
+	const int nCount = 2;
 	Object *objectList[nCount];
-	//objectList[0] = new Sphere(Point3(0.0f, -1000.0f, 0.0f), 1000.0f, new Lambertian(texture));
-	objectList[0] = new Sphere(Point3(0.0f, 0.0f, 0.0f), 2.0f, new Lambertian(imageTexture));
+	objectList[0] = new Sphere(Point3(0.0f, 0.0f, 0.0f), 1.0f, new Lambertian(imageTexture));
+	objectList[1] = new XYRect(Point3(-0.5f, -0.5f, -1.5f), Point3(0.5f, 0.5f, -2.5f), new DiffuseLight(new ConstantTexture(Color(4.0f))));
 
 	scene.setObjectList(objectList, nCount);
 

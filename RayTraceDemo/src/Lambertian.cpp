@@ -16,7 +16,7 @@ bool Lambertian::scatter(const Ray& ray, const HitRecord& record, Vector3f& atte
 {
 	Vector3f target = record.p + record.normal + getRandomInUnitSphere();
 	scattered = Ray(record.p, (target - record.p).normalize(), ray.getTime());
-	attenuation = m_Albedo->getColor(0.0f, 0.0f, record.p);
+	attenuation = m_Albedo->getColor(record.u, record.v, record.p);
 
 	return true;
 }

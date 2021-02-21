@@ -6,6 +6,9 @@ bin-int/
 # .ppm
 **.ppm
 
+# res
+RayTraceDemo/res/
+
 # Visual Studio files and folder
 .vs/
 **.sln
