@@ -16,6 +16,7 @@
 #include "DiffuseLight.h"
 #include "AxisAlignedRect.h"
 #include "FlipNormals.h"
+#include "Cuboid.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -43,7 +44,7 @@ int main()
 	Material* light = new DiffuseLight(new ConstantTexture(Color(15.0f)));
 
 
-	const int nCount = 6;
+	const int nCount = 8;
 	Object *objectList[nCount];
 	objectList[0] = new FlipNormals(new YZRect(Point3(555.0f, 0.0f, 0.0f), Point3(555.0f, 555.0f, 555.0f), green));
 	objectList[1] = new YZRect(Point3(0.0f, 0.0f, 0.0f), Point3(0.0f, 555.0f, 555.0f), red);
@@ -51,6 +52,8 @@ int main()
 	objectList[3] = new FlipNormals(new XZRect(Point3(0.0f, 555.0f, 0.0f), Point3(555.0f, 555.0f, 555.0f), white));
 	objectList[4] = new XZRect(Point3(0.0f, 0.0f, 0.0f), Point3(555.0f, 0.0f, 555.0f), white);
 	objectList[5] = new FlipNormals(new XYRect(Point3(0.0f, 0.0f, 555.0f), Point3(555.0f, 555.0f, 555.0f), white));
+	objectList[6] = new Cuboid(Point3(130.0f, 0.0f, 65.0f), Point3(295.0f, 165.0f, 230.0f), white);
+	objectList[7] = new Cuboid(Point3(265.0f, 0.0f, 295.0f), Point3(430.0f, 330.0f, 460.0f), white);
 
 	scene.setObjectList(objectList, nCount);
 
