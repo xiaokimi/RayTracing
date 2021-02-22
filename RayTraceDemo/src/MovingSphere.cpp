@@ -1,11 +1,11 @@
 #include "rtpch.h"
 #include "MovingSphere.h"
 
-MovingSphere::MovingSphere(const Point3& center0, const Point3& center1, const float& t0, const float& t1, const float& radius, Material* material)
+MovingSphere::MovingSphere(const Point3& center0, const Point3& center1, const float& tMin, const float& tMax, const float& radius, Material* material)
 : m_Center0(center0)
 , m_Center1(center1)
-, m_Time0(t0)
-, m_Time1(t1)
+, m_TimeMin(tMin)
+, m_TimeMax(tMax)
 , m_Radius(radius)
 , m_Material(material)
 {
@@ -52,10 +52,10 @@ bool MovingSphere::hit(const Ray& ray, const float& tMin, const float& tMax, Hit
 }
 
 
-bool MovingSphere::getBoundingBox(const float& t0, const float& t1, Bounds3& box) const
+bool MovingSphere::getBoundingBox(const float& tMin, const float& tMax, Bounds3& box) const
 {
-	Point3 center0 = getCenter(t0);
-	Point3 center1 = getCenter(t1);
+	Point3 center0 = getCenter(tMin);
+	Point3 center1 = getCenter(tMax);
 	Bounds3 box0(center0 - Vector3f(m_Radius), center0 + Vector3f(m_Radius));
 	Bounds3 box1(center1 - Vector3f(m_Radius), center1 + Vector3f(m_Radius));
 	box = getSurroundingBox(box0, box1);
@@ -65,5 +65,5 @@ bool MovingSphere::getBoundingBox(const float& t0, const float& t1, Bounds3& box
 
 Point3 MovingSphere::getCenter(const float& time) const
 {
-	return m_Center0 + (time - m_Time0) / (m_Time1 - m_Time0) * (m_Center1 - m_Center0);
+	return m_Center0 + (time - m_TimeMin) / (m_TimeMax - m_TimeMin) * (m_Center1 - m_Center0);
 }

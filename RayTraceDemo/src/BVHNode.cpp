@@ -1,7 +1,7 @@
 #include "rtpch.h"
 #include "BVHNode.h"
 
-BVHNode::BVHNode(Object** objectList, const int& nCount, const float& t0, const float& t1)
+BVHNode::BVHNode(Object** objectList, const int& nCount, const float& tMin, const float& tMax)
 {
 	int axis = int(3 * dis(gen));
 	if (axis == 0)
@@ -22,12 +22,12 @@ BVHNode::BVHNode(Object** objectList, const int& nCount, const float& t0, const 
 	}
 	else
 	{
-		m_Left = new BVHNode(objectList, nCount / 2, t0, t1);
-		m_Right = new BVHNode(objectList + nCount / 2, nCount - nCount / 2, t0, t1);
+		m_Left = new BVHNode(objectList, nCount / 2, tMin, tMax);
+		m_Right = new BVHNode(objectList + nCount / 2, nCount - nCount / 2, tMin, tMax);
 	}
 	
 	Bounds3 boxLeft, boxRight;
-	if (!m_Left->getBoundingBox(t0, t1, boxLeft) || !m_Right->getBoundingBox(t0, t1, boxRight))
+	if (!m_Left->getBoundingBox(tMin, tMax, boxLeft) || !m_Right->getBoundingBox(tMin, tMax, boxRight))
 	{
 		std::cerr << "Error\n";
 	}
@@ -62,7 +62,7 @@ bool BVHNode::hit(const Ray& ray, const float& tMin, const float& tMax, HitRecor
 	return false;
 }
 
-bool BVHNode::getBoundingBox(const float& t0, const float& t1, Bounds3& box) const
+bool BVHNode::getBoundingBox(const float& tMin, const float& tMax, Bounds3& box) const
 {
 	box = m_Box;
 	return true;

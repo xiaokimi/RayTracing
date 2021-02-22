@@ -14,7 +14,8 @@
 #include "NoiseTexture.h"
 #include "ImageTexture.h"
 #include "DiffuseLight.h"
-#include "XYRect.h"
+#include "AxisAlignedRect.h"
+#include "FlipNormals.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -26,27 +27,30 @@ int main()
 	int width = 400;
 	int heigth = 400;
 
-	Point3 lookfrom(13.0f, 0.0f, 3.0f);
-	Point3 lookat(0.0f, 0.0f, 0.0f);
+	Point3 lookfrom(278.0f, 278.0f, -800.0f);
+	Point3 lookat(278.0f, 278.0f, 0.0f);
 	//float focusDistance = (lookfrom - lookat).length();
 	float focusDistance = 10.0f;
 	float apeture = 0.0f;
 
-	Camera camera(lookfrom, lookat, Vector3f(0.0f, 1.0f, 0.0f), 20.0f, float(width)/float(heigth), apeture, focusDistance, 0.0f, 1.0f);
+	Camera camera(lookfrom, lookat, Vector3f(0.0f, 1.0f, 0.0f), 40.0f, float(width)/float(heigth), apeture, focusDistance, 0.0f, 1.0f);
 	Scene scene(width, heigth);
 	Renderer renderer(width, heigth);
 
-	int textureWidth, textureHeight, channel;
-	unsigned char* textureData = stbi_load("res/sky.jpg", &textureWidth, &textureHeight, &channel, 0);
+	Material* red = new Lambertian(new ConstantTexture(Color(0.65f, 0.05f, 0.05f)));
+	Material* white = new Lambertian(new ConstantTexture(Color(0.73f)));
+	Material* green = new Lambertian(new ConstantTexture(Color(0.12f, 0.45f, 0.15f)));
+	Material* light = new DiffuseLight(new ConstantTexture(Color(15.0f)));
 
-	ImageTexture* imageTexture = new ImageTexture(textureWidth, textureHeight, textureData);
 
-	NoiseTexture* texture = new NoiseTexture();
-
-	const int nCount = 2;
+	const int nCount = 6;
 	Object *objectList[nCount];
-	objectList[0] = new Sphere(Point3(0.0f, 0.0f, 0.0f), 1.0f, new Lambertian(imageTexture));
-	objectList[1] = new XYRect(Point3(-0.5f, -0.5f, -1.5f), Point3(0.5f, 0.5f, -2.5f), new DiffuseLight(new ConstantTexture(Color(4.0f))));
+	objectList[0] = new FlipNormals(new YZRect(Point3(555.0f, 0.0f, 0.0f), Point3(555.0f, 555.0f, 555.0f), green));
+	objectList[1] = new YZRect(Point3(0.0f, 0.0f, 0.0f), Point3(0.0f, 555.0f, 555.0f), red);
+	objectList[2] = new XZRect(Point3(213.0f, 554.0f, 227.0f), Point3(343.0f, 554.0f, 332.0f), light);
+	objectList[3] = new FlipNormals(new XZRect(Point3(0.0f, 555.0f, 0.0f), Point3(555.0f, 555.0f, 555.0f), white));
+	objectList[4] = new XZRect(Point3(0.0f, 0.0f, 0.0f), Point3(555.0f, 0.0f, 555.0f), white);
+	objectList[5] = new FlipNormals(new XYRect(Point3(0.0f, 0.0f, 555.0f), Point3(555.0f, 555.0f, 555.0f), white));
 
 	scene.setObjectList(objectList, nCount);
 

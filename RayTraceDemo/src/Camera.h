@@ -6,7 +6,7 @@
 class Camera
 {
 public:
-	Camera(const Point3& lookfrom, const Point3& lookat, const Vector3f& vup, const float& vfov, const float& aspect, const float& aperture, const float& focusDistance, const float& t0, const float& t1);
+	Camera(const Point3& lookfrom, const Point3& lookat, const Vector3f& vup, const float& vfov, const float& aspect, const float& aperture, const float& focusDistance, const float& tMin, const float& tMax);
 	~Camera();
 
 	Ray getRay(const float& s, const float& t) const;
@@ -20,5 +20,6 @@ private:
 	Vector3f u, v, w;
 	float m_LensRadius;
 
-	float time0, time1;
+	float m_TimeMin;
+	float m_TimeMax;
 };

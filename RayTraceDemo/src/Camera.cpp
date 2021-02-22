@@ -1,7 +1,7 @@
 #include "rtpch.h"
 #include "Camera.h"
 
-Camera::Camera(const Point3& lookfrom, const Point3& lookat, const Vector3f& vup, const float& vfov, const float& aspect, const float& aperture, const float& focusDistance, const float& t0, const float& t1)
+Camera::Camera(const Point3& lookfrom, const Point3& lookat, const Vector3f& vup, const float& vfov, const float& aspect, const float& aperture, const float& focusDistance, const float& tMin, const float& tMax)
 {
 	//
 	w = (lookfrom - lookat).normalize();
@@ -13,8 +13,8 @@ Camera::Camera(const Point3& lookfrom, const Point3& lookat, const Vector3f& vup
 	float halfWidth = halfHeight * aspect;
 
 	m_LensRadius = aperture / 2;
-	time0 = t0;
-	time1 = t1;
+	m_TimeMin = tMin;
+	m_TimeMax = tMax;
 
 	m_Origin = lookfrom;
 	m_LowerLeftCorner = m_Origin - (halfWidth * u + halfHeight * v + w) * focusDistance;
@@ -31,6 +31,6 @@ Ray Camera::getRay(const float& s, const float& t) const
 {
 	Vector3f rd = m_LensRadius * getRandomInUnitDisk();
 	Vector3f offset = u * rd.x() + v * rd.y();
-	float time = time0 + dis(gen) * (time1 - time0);
+	float time = m_TimeMin + dis(gen) * (m_TimeMax - m_TimeMin);
 	return Ray(m_Origin + offset, (m_LowerLeftCorner - m_Origin - offset + s * m_Horizontal + t * m_Vertical).normalize(), time);
 }

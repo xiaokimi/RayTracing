@@ -51,7 +51,7 @@ bool Sphere::hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord
 	return false;
 }
 
-bool Sphere::getBoundingBox(const float& t0, const float& t1, Bounds3& box) const
+bool Sphere::getBoundingBox(const float& tMin, const float& tMax, Bounds3& box) const
 {
 	box = Bounds3(m_Center - Vector3f(m_Radius), m_Center + Vector3f(m_Radius));
 	return true;
