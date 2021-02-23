@@ -20,6 +20,8 @@ T lerp(const T& tMin, const T& tMax, const T& t)
 	return std::max<T>(tMin, std::min<T>(tMax, t));
 }
 
+float* convertToSRGB(const int& width, const int& height, const unsigned char* pixels);
+
 Vector3f getRandomInUnitSphere();
 Vector3f getRandomInUnitDisk();
 

@@ -32,7 +32,7 @@ int main()
 	//Point3 lookfrom(278.0f, 278.0f, -800.0f);
 	//Point3 lookat(278.0f, 278.0f, 0.0f);
 
-	Point3 lookfrom(0.0f, 0.0, 5.0f);
+	Point3 lookfrom(0.0f, 0.0, 3.0f);
 	Point3 lookat(0.0, 0.0, 0.0f);
 	Vector3f vup(0.0f, 1.0f, 0.0f);
 	float vFov = 90.0f;
@@ -65,11 +65,11 @@ int main()
 
 	Point3 vertex[6] = {
 		Point3(-1.0f, -1.0f, 0.0f),
-		Point3(1.0f, -1.0f, 0.0f),
+		Point3(1.0f, -1.0f, -2.0f),
 		Point3(-1.0f, 1.0f, 0.0f),
-		Point3(1.0f, -1.0f, 0.0f),
+		Point3(1.0f, -1.0f, -2.0f),
 		Point3(-1.0f, 1.0f, 0.0f),
-		Point3(1.0f, 1.0f, 0.0f)
+		Point3(1.0f, 1.0f, -2.0f)
 	};
 
 	Vector3f normal[6] = {
@@ -91,8 +91,10 @@ int main()
 	};
 
 	int textureWidth, textureHeight, channel;
-	unsigned char* textureData = stbi_load("res/container.jpg", &textureWidth, &textureHeight, &channel, 0);
-	Lambertian* material = new Lambertian(new ImageTexture(textureWidth, textureHeight, textureData));
+	unsigned char* textureData = stbi_load("res/test.png", &textureWidth, &textureHeight, &channel, 0);
+	float* srgb = convertToSRGB(textureWidth, textureHeight, textureData);
+
+	Lambertian* material = new Lambertian(new ImageTexture(textureWidth, textureHeight, srgb));
 
 	const int nCount = 2;
 	Object *objectList[nCount];

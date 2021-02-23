@@ -1,5 +1,18 @@
 #include "rtpch.h"
 
+float* convertToSRGB(const int& width, const int& height, const unsigned char* pixels)
+{
+	int dataSize = width * height * 3;
+	float *srgb = new float[dataSize];
+
+	for (int i = 0; i < dataSize; i++)
+	{
+		srgb[i] = std::powf(pixels[i] / 255.0f, M_GAMMA);
+	}
+
+	return srgb;
+}
+
 Vector3f getRandomInUnitSphere()
 {
 	Vector3f p;

@@ -6,7 +6,7 @@ class ImageTexture : public Texture
 {
 public:
 	ImageTexture() = default;
-	ImageTexture(const int& width, const int& height, unsigned char* pixels);
+	ImageTexture(const int& width, const int& height, float* srgb);
 	~ImageTexture();
 
 	Color getColor(const float& u, const float& v, const Point3& point) const;
@@ -14,5 +14,5 @@ public:
 private:
 	int m_Width;
 	int m_Height;
-	unsigned char* m_Data;
+	float* m_SRGB;
 };
