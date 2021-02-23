@@ -1,5 +1,32 @@
 #pragma once
 
+class Vector2f
+{
+public:
+	Vector2f();
+	Vector2f(const float& t);
+	Vector2f(const float& xx, const float& yy);
+	Vector2f(const Vector2f& v);
+
+	virtual ~Vector2f();
+
+	float x() const;
+	float y() const;
+
+	Vector2f operator+(const float& t) const;
+	Vector2f operator+(const Vector2f& v) const;
+	Vector2f operator-(const float& t) const;
+	Vector2f operator-(const Vector2f& v) const;
+	Vector2f operator*(const float& t) const;
+	Vector2f operator/(const float& t) const;
+
+	friend Vector2f operator*(const float& t, const Vector2f& v);
+
+private:
+	float X;
+	float Y;
+};
+
 class Vector3f
 {
 public:
@@ -49,5 +76,6 @@ private:
 	float Z;
 };
 
+using Point2 = Vector2f;
 using Point3 = Vector3f;
 using Color = Vector3f;

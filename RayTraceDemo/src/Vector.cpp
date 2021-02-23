@@ -1,6 +1,84 @@
 #include "rtpch.h"
 #include "Vector.h"
 
+Vector2f::Vector2f()
+: X(0.0f)
+, Y(0.0f)
+{
+
+}
+
+Vector2f::Vector2f(const float& t)
+: X(t)
+, Y(t)
+{
+
+}
+
+Vector2f::Vector2f(const float& xx, const float& yy)
+: X(xx)
+, Y(yy)
+{
+
+}
+
+Vector2f::Vector2f(const Vector2f& v)
+: X(v.X)
+, Y(v.Y)
+{
+
+}
+
+Vector2f::~Vector2f()
+{
+
+}
+
+float Vector2f::x() const
+{
+	return X;
+}
+
+float Vector2f::y() const
+{
+	return Y;
+}
+
+Vector2f Vector2f::operator+(const float& t) const
+{
+	return Vector2f(X + t, Y + t);
+}
+
+Vector2f Vector2f::operator+(const Vector2f& v) const
+{
+	return Vector2f(X + v.X, Y + v.Y);
+}
+
+Vector2f Vector2f::operator-(const float& t) const
+{
+	return Vector2f(X - t, Y - t);
+}
+
+Vector2f Vector2f::operator-(const Vector2f& v) const
+{
+	return Vector2f(X - v.X, Y - v.Y);
+}
+
+Vector2f Vector2f::operator*(const float& t) const
+{
+	return Vector2f(X * t, Y * t);
+}
+
+Vector2f Vector2f::operator/(const float& t) const
+{
+	return Vector2f(X / t, Y / t);
+}
+
+Vector2f operator*(const float& t, const Vector2f& v)
+{
+	return Vector2f(t * v.X, t * v.Y);
+}
+
 Vector3f::Vector3f()
 : X(0.0f)
 , Y(0.0f)

@@ -9,7 +9,7 @@ Renderer::Renderer(int width, int height)
 {
 	m_FrameBuffer.resize(width * height);
 
-	int nCount = 11;
+	int nCount = 5;
 	for (int v = nCount - 1; v > 0; v--)
 	{
 		for (int u = 1; u < nCount; u++)
@@ -34,7 +34,7 @@ void Renderer::render(const Scene& scene, const Camera& camera)
 			for (const auto[offsetX, offsetY] : m_SampleArray)
 			{
 				Ray ray = camera.getRay((u * 1.0f + offsetX) / m_Width, (v * 1.0f + offsetY) / m_Height);
-				color +=  castRay(scene, ray, 0);
+				color += castRay(scene, ray, 0);
 			}
 			
 			m_FrameBuffer[(m_Height - 1 - v) * m_Width + u] = color / m_SampleArray.size();
@@ -77,6 +77,6 @@ Color Renderer::castRay(const Scene& scene, const Ray& ray, const int& depth) co
 		}
 	}
 
-	return Color(0.0f);
+	return Color(1.0f);
 }
 

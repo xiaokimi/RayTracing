@@ -6,7 +6,8 @@
 
 #include "Vector.h"
 
-constexpr float M_PI = 3.14159265358979323846;
+constexpr float M_PI = 3.14159265358979323846f;
+constexpr float M_GAMMA = 2.2f;
 constexpr float kInfinity = std::numeric_limits<float>::max();
 
 static std::random_device dev;
