@@ -77,6 +77,6 @@ Color Renderer::castRay(const Scene& scene, const Ray& ray, const int& depth) co
 		}
 	}
 
-	return Color(1.0f);
+	return Color(0.0f);
 }
 

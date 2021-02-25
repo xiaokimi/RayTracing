@@ -3,28 +3,16 @@
 #include "AxisAlignedRect.h"
 #include "FlipNormals.h"
 
-Cuboid::Cuboid(const Point3& pMin, const Point3& pMax, Material* material)
-: m_Min(pMin)
-, m_Max(pMax)
+Cuboid::Cuboid(Object** objectList, const int& nCount)
+: m_ObjectList(objectList)
+, m_ObjectCount(nCount)
 {
-	m_ObjectList[0] = new FlipNormals(new XYRect(pMin, Point3(pMax.x(), pMax.y(), pMin.z()), material));
-	m_ObjectList[1] = new XYRect(Point3(pMin.x(), pMin.y(), pMax.z()), pMax, material);
-	m_ObjectList[2] = new FlipNormals(new XZRect(pMin, Point3(pMax.x(), pMin.y(), pMax.z()), material));
-	m_ObjectList[3] = new XZRect(Point3(pMin.x(), pMax.y(), pMin.z()), pMax, material);
-	m_ObjectList[4] = new FlipNormals(new YZRect(pMin, Point3(pMin.x(), pMax.y(), pMax.z()), material));
-	m_ObjectList[5] = new YZRect(Point3(pMax.x(), pMin.y(), pMin.z()), pMax, material);
+	
 }
 
 Cuboid::~Cuboid()
 {
-	for (int i = 0; i < 6; i++)
-	{
-		if (m_ObjectList[i])
-		{
-			delete m_ObjectList[i];
-			m_ObjectList[i] = nullptr;
-		}
-	}
+
 }
 
 bool Cuboid::hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord& record) const
@@ -34,7 +22,7 @@ bool Cuboid::hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord
 	HitRecord temp;
 	float t = tMax;
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < m_ObjectCount; i++)
 	{
 		if (m_ObjectList[i]->hit(ray, tMin, t, temp))
 		{
@@ -50,6 +38,24 @@ bool Cuboid::hit(const Ray& ray, const float& tMin, const float& tMax, HitRecord
 
 bool Cuboid::getBoundingBox(const float& tMin, const float& tMax, Bounds3& box) const
 {
-	box = Bounds3(m_Min, m_Max);
+	Bounds3 tempBox;
+	if (!m_ObjectList[0]->getBoundingBox(tMin, tMax, tempBox))
+	{
+		return false;
+	}
+
+	box = tempBox;
+	for (int i = 1; i < m_ObjectCount; i++)
+	{
+		if (m_ObjectList[i]->getBoundingBox(tMin, tMax, tempBox))
+		{
+			box = getSurroundingBox(box, tempBox);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	return true;
 }

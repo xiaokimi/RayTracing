@@ -40,7 +40,9 @@ public:
 	float x() const;
 	float y() const;
 	float z() const;
+
 	float& operator[](const int& index);
+	const float& operator[](const int& index) const;
 
 	Vector3f operator-() const;
 

@@ -31,7 +31,7 @@ bool Triangle::hit(const Ray& ray, const float& tMin, const float& tMax, HitReco
 	float gamma = coeff * dot(S2, ray.getDirection());
 	float alpha = 1.0f - beta - gamma;
 
-	if (t > 0.0f && alpha > 0.0f && alpha < 1.0f && beta > 0.0f && beta < 1.0f && gamma > 0.0f && gamma < 1.0f)
+	if (t > tMin && t < tMax && alpha > 0.0f && alpha < 1.0f && beta > 0.0f && beta < 1.0f && gamma > 0.0f && gamma < 1.0f)
 	{
 		record.t = t;
 		record.p = ray.getPosition(t);

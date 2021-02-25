@@ -141,6 +141,16 @@ float& Vector3f::operator[](const int& index)
 		return Z;
 }
 
+const float& Vector3f::operator[](const int& index) const
+{
+	if (index == 0)
+		return X;
+	else if (index == 1)
+		return Y;
+	else
+		return Z;
+}
+
 Vector3f Vector3f::operator-() const
 {
 	return Vector3f(-X, -Y, -Z);
