@@ -19,12 +19,15 @@
 #include "Cuboid.h"
 #include "Triangle.h"
 #include "Mat.h"
+#include "ConstantMedium.h"
+#include "Isotropic.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 void saveToFile(const Renderer& renderer, const char* filePath);
 BVHNode* createCornellBox();
+BVHNode* createCornellSmoke();
 Cuboid* createOneCuoid(const Vector3f& scaled, const Mat3& rotated, const Vector3f& translated, Material* material);
 
 int main()
@@ -44,7 +47,8 @@ int main()
 	Scene scene(width, heigth);
 	Renderer renderer(width, heigth);
 
-	BVHNode* root = createCornellBox();
+	//BVHNode* root = createCornellBox();
+	BVHNode* root = createCornellSmoke();
 	scene.setBVHNode(root);
 
 	{
@@ -91,6 +95,31 @@ BVHNode* createCornellBox()
 
 	objectList[i++] = createOneCuoid(Vector3f(165.0f), rotate(Mat3(1.0f), Vector3f(0.0f, 1.0f, 0.0f), -18.0f), Vector3f(130.0f, 0.0f, 65.0f), white);
 	objectList[i++] = createOneCuoid(Vector3f(165.0f, 330.0f, 165.0f), rotate(Mat3(1.0f), Vector3f(0.0f, 1.0f, 0.0f), 15.0f), Vector3f(265.0f, 0.0f, 295.0f), white);
+
+	return new BVHNode(objectList, i, 0.0f, 1.0f);
+}
+
+BVHNode* createCornellSmoke()
+{
+	Material* red = new Lambertian(new ConstantTexture(Color(0.65f, 0.05f, 0.05f)));
+	Material* white = new Lambertian(new ConstantTexture(Color(0.73f)));
+	Material* green = new Lambertian(new ConstantTexture(Color(0.12f, 0.45f, 0.15f)));
+	Material* light = new DiffuseLight(new ConstantTexture(Color(7.0f)));
+
+	int i = 0;
+	Object** objectList = new Object*[8];
+	objectList[i++] = new FlipNormals(new YZRect(Point3(555.0f, 0.0f, 0.0f), Point3(555.0f, 555.0f, 555.0f), green));
+	objectList[i++] = new YZRect(Point3(0.0f, 0.0f, 0.0f), Point3(0.0f, 555.0f, 555.0f), red);
+	objectList[i++] = new XZRect(Point3(113.0f, 554.0f, 127.0f), Point3(443.0f, 554.0f, 432.0f), light);
+	objectList[i++] = new FlipNormals(new XZRect(Point3(0.0f, 555.0f, 0.0f), Point3(555.0f, 555.0f, 555.0f), white));
+	objectList[i++] = new XZRect(Point3(0.0f, 0.0f, 0.0f), Point3(555.0f, 0.0f, 555.0f), white);
+	objectList[i++] = new FlipNormals(new XYRect(Point3(0.0f, 0.0f, 555.0f), Point3(555.0f, 555.0f, 555.0f), white));
+
+	Object* cuoid1 = createOneCuoid(Vector3f(165.0f), rotate(Mat3(1.0f), Vector3f(0.0f, 1.0f, 0.0f), -18.0f), Vector3f(130.0f, 0.0f, 65.0f), nullptr);
+	objectList[i++] = new ConstantMedium(cuoid1, 0.01f, new Isotropic(new ConstantTexture(Color(1.0f))));
+
+	Object* cuoid2 = createOneCuoid(Vector3f(165.0f, 330.0f, 165.0f), rotate(Mat3(1.0f), Vector3f(0.0f, 1.0f, 0.0f), 15.0f), Vector3f(265.0f, 0.0f, 295.0f), nullptr);
+	objectList[i++] = new ConstantMedium(cuoid2, 0.01f, new Isotropic(new ConstantTexture(Color(0.0f))));
 
 	return new BVHNode(objectList, i, 0.0f, 1.0f);
 }
